@@ -89,17 +89,34 @@
                 </div>
             </div>
             <div class="flex-grow space-y-3 overflow-y-auto pb-40">
-                <section class="card-main" :style="`background: ${config.bgCard}; border-color: ${config.borderCard}`">
-                    <div class="flex justify-between items-center mb-2"><span class="label-small text-blue-400">Bloque 1</span><input type="text" x-model="form.bus1" @input="saveDraft()" placeholder="BUS" class="w-16 bg-black/40 rounded py-1 text-yellow-400 font-black text-sm uppercase"></div>
-                    <div class="flex gap-2 mb-2">
-                        <div class="block-hora" :style="`background: ${config.bgInput}`"><label class="label-small block">Inicio</label><input type="time" x-model="form.horaE1" @input="calcularTodo(); saveDraft()" :style="`color: ${config.txtInput}`"></div>
-                        <div class="block-hora" :style="`background: ${config.bgInput}`"><label class="label-small block">Fin</label><input type="time" x-model="form.horaS1" @input="calcularTodo(); saveDraft()" :style="`color: ${config.txtInput}`"></div>
-                    </div>
-                    <div class="flex gap-2">
-                        <div class="block-hora" :style="`background: ${config.bgInput}`"><label class="label-small block text-cyan-400">KM Ini</label><input type="number" x-model="form.kmI1" @input="calcularTodo(); saveDraft()"></div>
-                        <div class="block-hora" :style="`background: ${config.bgInput}`"><label class="label-small block text-cyan-400">KM Fin</label><input type="number" x-model="form.kmF1" @input="calcularTodo(); saveDraft()"></div>
-                    </div>
-                </section>
+               <section class="card-main" :style="`background: ${config.bgCard}; border-color: ${config.borderCard}`">
+    <div class="flex justify-between items-center mb-2">
+        <span class="label-small text-blue-400">Bloque 1</span>
+        <input type="text" x-model="form.bus1" @input="saveDraft()" placeholder="BUS" class="w-16 bg-black/40 rounded py-1 text-yellow-400 font-black text-sm uppercase">
+    </div>
+    
+    <div class="flex gap-2 mb-2">
+        <div class="block-hora" :style="`background: ${config.bgInput}`">
+            <label class="label-small block">Inicio</label>
+            <input type="time" x-model="form.horaE1" @input="calcularTodo(); saveDraft()" :style="`color: ${config.txtInput}`" class="cursor-pointer">
+        </div>
+        <div class="block-hora" :style="`background: ${config.bgInput}`">
+            <label class="label-small block">Fin</label>
+            <input type="time" x-model="form.horaS1" @input="calcularTodo(); saveDraft()" :style="`color: ${config.txtInput}`" class="cursor-pointer">
+        </div>
+    </div>
+    
+    <div class="flex gap-2">
+        <div class="block-hora" :style="`background: ${config.bgInput}`">
+            <label class="label-small block text-cyan-400">KM Ini</label>
+            <input type="number" x-model="form.kmI1" @input="calcularTodo(); saveDraft()">
+        </div>
+        <div class="block-hora" :style="`background: ${config.bgInput}`">
+            <label class="label-small block text-cyan-400">KM Fin</label>
+            <input type="number" x-model="form.kmF1" @input="calcularTodo(); saveDraft()">
+        </div>
+    </div>
+</section>
                 <template x-if="form.esPartida">
                     <section class="card-main" :style="`background: ${config.bgCard}; border-color: ${config.borderCard}`">
                         <div class="flex justify-between items-center mb-2"><span class="label-small text-orange-400">Bloque 2</span><input type="text" x-model="form.bus2" @input="saveDraft()" placeholder="BUS 2" class="w-16 bg-black/40 rounded py-1 text-yellow-400 font-black text-sm uppercase"></div>
