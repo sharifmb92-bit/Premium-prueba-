@@ -270,9 +270,28 @@
                 estiloBoton(e) { if(e === 'SI') return 'bg-green-600 border-green-400 text-white'; if(e === 'DUDA') return 'blink-duda'; return 'bg-gray-800 border-gray-700 text-gray-500'; },
                 toggleDiet(t) { if(this.form[t] === 'NO') this.form[t] = 'SI'; else if(this.form[t] === 'SI') this.form[t] = 'DUDA'; else this.form[t] = 'NO'; this.saveDraft(); },
                 renderCalendario() { const days = new Date(this.año, this.mes + 1, 0).getDate(); this.mesNombre = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(new Date(this.año, this.mes)); this.diasCalendario = []; for(let i=1; i<=days; i++) { let f = `${this.año}-${String(this.mes+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`; this.diasCalendario.push({ num: i, fecha: f, isHoy: f === new Date().toISOString().split('T')[0] }); } },
-                seleccionarDia(f) { this.fechaSeleccionada = f; this.screen = 2; },
-                abrirRegistro(partida) { this.form.esPartida = partida; this.screen = 2; },
-                saveDraft() { if(this.config.persistencia) localStorage.setItem('tmsa_draft_today', JSON.stringify(this.form)); },
+               seleccionarDia(f) {
+                    this.fechaSeleccionada = f;
+                    const savedDraft = JSON.parse(localStorage.getItem('tmsa_draft_today') || 'null');
+                    if (savedDraft && savedDraft.fechaBorrador === f) {
+                        this.form = savedDraft;
+                    } else {
+                        this.form = { esPartida: false, bus1: '', bus2: '', horaE1: '', horaS1: '', kmI1: '', kmF1: '', horaE2: '', horaS2: '', kmI2: '', kmF2: '', comida: 'NO', cena: 'NO', fechaBorrador: f };
+                    }
+                    this.screen = 2;
+                },
+                saveDraft() {
+                    if (this.config.persistencia) {
+                        this.form.fechaBorrador = this.fechaSeleccionada;
+                        localStorage.setItem('tmsa_draft_today', JSON.stringify(this.form));
+                    }
+                },
+                abrirRegistro(partida) {
+                    this.form.esPartida = partida;
+                    this.form.fechaBorrador = this.fechaSeleccionada;
+                    this.saveDraft();
+                    this.screen = 2;
+                },
                 guardarJornada() { 
                     if (this.config.avisoBus && !this.form.bus1) { alert("⚠️ SUPERVISOR: Falta BUS"); return; } 
                     this.history = this.history.filter(i => i.fecha !== this.fechaSeleccionada); 
